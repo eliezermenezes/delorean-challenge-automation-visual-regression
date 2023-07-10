@@ -1,0 +1,36 @@
+name: Visual Regression Testing
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.15.0
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Backstop Reference
+        run: npm run reference
+
+      - name: Run Backstop Test
+        run: npm run test
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Regression Test Results
+          path: backstop_data/html_report
