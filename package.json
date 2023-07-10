@@ -1,0 +1,23 @@
+{
+  "name": "delorean-challenge-automation-visual-regression",
+  "version": "1.0.0",
+  "description": "BackstopJS automates visual regression testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "backstop test",
+    "reference": "backstop reference"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliezermenezes/delorean-challenge-automation-visual-regression.git"
+  },
+  "author": "Eliezer dos Santos Menezes <eliezermenezes19@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eliezermenezes/delorean-challenge-automation-visual-regression/issues"
+  },
+  "homepage": "https://github.com/eliezermenezes/delorean-challenge-automation-visual-regression#readme",
+  "devDependencies": {
+    "backstopjs": "^6.2.2"
+  }
+}

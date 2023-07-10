@@ -10,10 +10,15 @@
       "label": "tablet",
       "width": 1024,
       "height": 768
+    },
+    {
+      "label": "desktop",
+      "width": 1920,
+      "height": 1080
     }
   ],
-  "onBeforeScript": "puppet/onBefore.js",
-  "onReadyScript": "puppet/onReady.js",
+  "onBeforeScript": "playwright/onBefore.js",
+  "onReadyScript": "playwright/onReady.js",
   "scenarios": [
     {
       "label": "Delorean Challenge Users",
@@ -43,12 +48,14 @@
     "ci_report": "backstop_data/ci_report"
   },
   "report": ["browser", "CI"],
-  "engine": "puppeteer",
+  "engine": "playwright",
   "engineOptions": {
+    "browser": "firefox",
     "args": ["--no-sandbox"]
   },
   "asyncCaptureLimit": 5,
   "asyncCompareLimit": 50,
   "debug": false,
-  "debugWindow": false
+  "debugWindow": false,
+  "fileNameTemplate": "{scenarioLabel}_{viewportLabel}"
 }

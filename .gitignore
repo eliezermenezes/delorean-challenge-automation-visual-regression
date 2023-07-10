@@ -1,2 +1,6 @@
 backstop_data/html_report/
+backstop_data/ci_report
 bitmaps_test/
+
+# Dependencies
+node_modules/
