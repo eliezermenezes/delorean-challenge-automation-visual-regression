@@ -23,7 +23,7 @@
     {
       "label": "Delorean Challenge Users",
       "cookiePath": "backstop_data/engine_scripts/cookies.json",
-      "url": "https://eliezermenezes.github.io/delorean-challenge/#/users",
+      "url": "http://localhost:4200",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",

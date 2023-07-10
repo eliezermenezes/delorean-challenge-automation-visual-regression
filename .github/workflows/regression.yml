@@ -1,0 +1,67 @@
+name: Visual Regression Testing
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository at v1.0
+        uses: actions/checkout@v2
+        with:
+          ref: v1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.15.0
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Backstop Reference
+        run: npm run reference
+
+      - name: Upload Reference Images
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Reference Images
+          path: backstop_data/bitmaps_reference
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - reference
+
+    steps:
+      - name: Checkout Repository at ${{ github.ref }}
+        uses: actions/checkout@v2
+
+      - name: Download Reference Images
+        uses: actions/download-artifact@v2
+        with:
+          name: Reference Images
+          path: backstop_data/bitmaps_reference
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.15.0
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Backstop Test
+        run: npm run test
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Regression Test Results
+          path: backstop_data/html_report
