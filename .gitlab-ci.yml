@@ -1,0 +1,67 @@
+variables:
+  REFERENCE_BRANCH: v1.0
+  TEST_BRANCH: $CI_COMMIT_REF_NAME
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+
+stages:
+  - reference
+  - test
+
+reference:
+  image: node:18.15.0
+  stage: reference
+  before_script:
+    - git fetch origin $REFERENCE_BRANCH:$REFERENCE_BRANCH
+    - git checkout $REFERENCE_BRANCH
+    - npm ci
+    - npx playwright install-deps
+  script:
+    - npm run reference
+  artifacts:
+    paths:
+      - ./backstop_data/bitmaps_reference
+  only:
+    - master
+
+test:
+  image: node:18.15.0
+  stage: test
+  before_script:
+    - git fetch origin $TEST_BRANCH:$TEST_BRANCH
+    - git checkout $TEST_BRANCH
+    - npm ci
+    - npx playwright install-deps
+  script:
+    - npm run test
+  artifacts:
+    paths:
+      - ./backstop_data/html_report
+  only:
+    - master
+
+# Execução dos testes com Docker
+reference-docker:
+  image: registry.gitlab.com/delorean-challenge/backstopjs-images
+  stage: reference
+  script:
+    - npm run reference
+  artifacts:
+    paths:
+      - ./backstop_data/html_report
+  only:
+    - master
+
+test-docker:
+  image: registry.gitlab.com/delorean-challenge/backstopjs-images
+  stage: test
+  script:
+    - npm run test
+  artifacts:
+    paths:
+      - ./backstop_data/html_report
+  only:
+    - master
